@@ -1,5 +1,5 @@
 (ns sudoku-solver.core
-(:refer-clojure :exclude [==])
+  (:refer-clojure :exclude [==])
   (:require [clojure.core.logic :refer :all])
   (:require [clojure.core.logic.fd :as fd]))
 
@@ -12,10 +12,10 @@
   (if (seq vars)
     (let [hint (first hints)]
       (all
-        (if-not (zero? hint)
-          (== (first vars) hint)
-          succeed)
-        (init (next vars) (next hints))))
+       (if-not (zero? hint)
+         (== (first vars) hint)
+         succeed)
+       (init (next vars) (next hints))))
     succeed))
 
 (defn sudokufd [hints]
@@ -26,12 +26,12 @@
                    y (range 0 9 3)]
                (get-square rows x y))]
     (run* [q]
-      (== q vars)
-      (everyg #(fd/in % (fd/interval 1 9)) vars)
-      (init vars hints)
-      (everyg fd/distinct rows)
-      (everyg fd/distinct cols)
-      (everyg fd/distinct sqs))))
+          (== q vars)
+          (everyg #(fd/in % (fd/interval 1 9)) vars)
+          (init vars hints)
+          (everyg fd/distinct rows)
+          (everyg fd/distinct cols)
+          (everyg fd/distinct sqs))))
 
 ;; ====
 
